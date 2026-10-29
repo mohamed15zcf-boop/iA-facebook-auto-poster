@@ -1,32 +1,22 @@
 yaml
-name: AI Auto Poster Bot
-
+name: Auto Facebook Post
 on:
   schedule:
-    # كيخدم كل نهار مع 8 ديال الليل بتوقيت المغرب
-    - cron: '0 19 * * *'
+    - cron: '0 9 * * *'
   workflow_dispatch:
-    # هادي باش تقدر تشعلو بيدك من التيليفون
-
 jobs:
-  post-job:
+  post:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: جيب الكود
-        uses: actions/checkout@v3
-
-      - name: وجد البايثون
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-
-      - name: نزل المكتبات
+          python-version: '3.11'
+      - name: Install
         run: pip install -r requirements.txt
-
-      - name: شعل البوت
-        run: python main.py
+      - name: Run
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          FB_TOKEN: ${{ secrets.FB_TOKEN }}
           PAGE_ID: ${{ secrets.PAGE_ID }}
+          FB_TOKEN: ${{ secrets.FB_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python main.py
